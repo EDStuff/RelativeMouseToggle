@@ -59,26 +59,26 @@ if starting:
 
 # Global parameters
 global absolute_sens, relative_sens, steering_sens, srvthrottle_sens, relative_range, smart_speed, rel_speed, curve, mradius, tradius, mcurve, mratio, jcurve, jratio, scurve, sratio
-absolute_sens = 45		# absolute mouse mode sensitivity
+absolute_sens = 45		    # absolute mouse mode sensitivity
 relative_sens = 100	    	# relative mouse mode sensitivity
-steering_sens = 70		# steering sensitivity
+steering_sens = 70			# steering sensitivity
 srvthrottle_sens = 20		# SRV throttle sensitivity
 
 relative_range = 450		# relative mouse range for auto centering
-smart_speed = 25 		# smart-centering speed, in absolute mouse mode
+smart_speed = 25 		    # smart-centering speed, in absolute mouse mode
 rel_speed = 500		    	# hard-centering speed, in relative mouse mode
 
-mcurve = 1.35  			    	# exponential factor for the mouse axis curve
+mcurve = 1.35  			    		# exponential factor for the mouse axis curve
 mratio = (max ** mcurve ) / max 	# ratio to normalize mouse range
-jcurve = 2.0				# exponential factor for the joystick axis
+jcurve = 2.0						# exponential factor for the joystick axis
 jratio = (max ** jcurve ) / max		# ratio to normalize joystick range
-scurve = 1.6				# exponential factor for the steering axis
+scurve = 1.6						# exponential factor for the steering axis
 sratio = (max ** scurve ) / max		# ratio to normalize steering range
 
-mradius = 4000                  # smart self-centering radius, for absolute mouse
-tradius = 750			# SRV Throttle auto centering for easy halt
+mradius = 4000                      # smart self-centering radius, for absolute mouse
+tradius = 750						# SRV Throttle auto centering for easy halt
 throttle_speed = 25
-srvthrottle_inc = 250		# SRV Throttle increment multiplicator
+srvthrottle_inc = 250				# SRV Throttle increment multiplicator
 
 #
 ###
@@ -281,17 +281,38 @@ if keyboard.getKeyDown(Key.NumberPad8) and keyboard.getKeyDown(Key.LeftShift):
 
 #
 ###
+##### Soft Centering - slow down axis values
+
+if keyboard.getKeyDown(Key.LeftControl):
+	if mouseX > 0:
+		mouseX = mouseX - 100
+	if mouseX < 0:
+		mouseX = mouseX + 100
+	
+	if mouseY > 0:
+		mouseY = mouseY - 100
+	if mouseY < 0:
+		mouseY = mouseY + 100
+	
+	if steerX > 0:
+		steerX = steerX - 100
+	if steerX < 0:
+		steerX = steerX + 100
+	
+#
+###
 ##### Hard Centering (By press an hotkey)
 
 # Useful when you need your mouse to return to the center, like when you switch workspaces or exiting galaxy map...
-if keyboard.getKeyDown(Key.LeftControl): 
+
+if keyboard.getKeyDown(Key.LeftControl) and keyboard.getPressed(Key.LeftWindowsKey):
 	mouseX = 0
 	mouseY = 0
 	mouseXcurved = 0
 	mouseYcurved = 0
 	steerX = 0
 	steerXcurved = 0
-	
+
 if keyboard.getKeyDown(Key.Backspace): 
 	mouseX = 0
 	mouseY = 0
@@ -332,3 +353,7 @@ diagnostics.watch(vJoy[0].dial)
 diagnostics.watch(vJoy[0].z)
 diagnostics.watch(vJoy[0].rz)
 
+# Toggles
+diagnostics.watch(roll2yaw)
+diagnostics.watch(vertical2pitch)
+diagnostics.watch(mouse2joystick)
