@@ -229,7 +229,7 @@ vJoy[0].dial = filters.deadband(srvthrottle, 100)
 # Exponential curved axis
 #if (joyX > 0):
 #	joyXcurved = math.floor((joyX ** jcurve) / jratio) 
-#If (joyX < 0):
+#if (joyX < 0):
 #	joyXn = joyX * -1
 #	joyXcurved = math.floor(((joyXn ** jcurve) * -1) / jratio)
 #
@@ -241,7 +241,7 @@ vJoy[0].dial = filters.deadband(srvthrottle, 100)
 
 # Joystick output
 #vJoy[0].z = filters.deadband(joyXcurved, 50)
-#Joy[0].rz = filters.deadband(joyYcurved, 50)
+#vJoy[0].rz = filters.deadband(joyYcurved, 50)
 
 #####
 ###
